@@ -14,10 +14,11 @@ export default {
         amber: { DEFAULT: '#e89a0a' },
       },
       fontFamily: {
-        sans: ['IBM Plex Sans Arabic', 'Syne', 'sans-serif'],
+        sans: ['Urbanist', 'Alexandria', 'sans-serif'],
         syne: ['Syne', 'sans-serif'],
-        ibm: ['IBM Plex Sans Arabic', 'sans-serif'],
-        arabic: ['IBM Plex Sans Arabic', 'sans-serif'],
+        ibm: ['Alexandria', 'sans-serif'],
+        urbanist: ['Urbanist', 'sans-serif'],
+        alexandria: ['Alexandria', 'sans-serif'],
       },
       borderColor: {
         DEFAULT: 'rgba(15, 14, 13, 0.1)',

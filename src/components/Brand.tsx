@@ -125,7 +125,7 @@ export const Brand = () => {
               منصة واحدة<br/>تكفي لإطلاق<br/><em className="text-red not-italic font-syne dir-ltr inline-block">أي محل.</em>
             </div>
             <div className="text-sm text-cream/30 font-light leading-[1.8] dir-rtl mb-5 ibm-font">
-              Beyno يجمع التصميم الداخلي، الهوية البصرية، الحضور الرقمي، التسويق، والأتمتة — كل شي جاهز تحت سقف واحد وبأعلى معايير الدقة.
+              Tekton يجمع التصميم الداخلي، الهوية البصرية، الحضور الرقمي، التسويق، والأتمتة — كل شي جاهز تحت سقف واحد وبأعلى معايير الدقة.
             </div>
             <div className="flex gap-5 flex-wrap">
               <div className="dir-ltr text-left">

@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { cn } from '../utils';
 
 export const CTA = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const { t, isRtl } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,9 +16,6 @@ export const CTA = () => {
     
     // Simulate API Call
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Here you would typically connect to your backend API
-    // console.log('Sending email to API:', email);
     
     setStatus('success');
   };
@@ -30,10 +30,8 @@ export const CTA = () => {
       >
         {/* Organic Light Movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Subtle Grid */}
           <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, white 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }} />
           
-          {/* Floating Liquid Blobs */}
           <motion.div 
             animate={{ 
               scale: [1, 1.2, 1],
@@ -54,7 +52,6 @@ export const CTA = () => {
             className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] bg-cream/10 blur-[80px] rounded-full" 
           />
 
-          {/* Scanning Light Beam */}
           <motion.div 
             animate={{ 
               top: ['-100%', '200%'],
@@ -73,51 +70,60 @@ export const CTA = () => {
             className="mb-4 flex items-center gap-3"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            <span className="text-[9px] tracking-[0.4em] uppercase text-white/60 font-bold font-syne">Ready to build?</span>
+            <span className="text-[9px] tracking-[0.4em] uppercase text-white/60 font-bold font-syne">{t('cta.tag')}</span>
           </motion.div>
 
           <motion.h2 
-            className="text-[clamp(32px,5vw,60px)] font-bold text-white leading-[1] mb-6 font-ibm tracking-tight dir-rtl"
+            className="text-[clamp(32px,5vw,60px)] font-bold text-white leading-[1] mb-6 font-ibm tracking-tight"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, type: "spring" }}
           >
-            جاهز تطلق <br/> <span className="text-cream italic font-syne">مشروعك؟</span>
+            {t('cta.title').includes('?') ? (
+              <>
+                {t('cta.title').replace('?', '')} <br/> 
+                <span className="text-cream italic font-syne">?</span>
+              </>
+            ) : (
+                t('cta.title')
+            )}
           </motion.h2>
 
-          <p className="text-lg text-white/70 mb-12 max-w-[500px] font-ibm font-light leading-relaxed dir-rtl px-4">
-            انضم لأكثر من 10 مشاريع تجارية انطلقت بقوة. اترك بريدك الإلكتروني وسيقوم فريقنا بالتواصل معك لبدء رحلة التميز.
+          <p className="text-lg text-white/70 mb-12 max-w-[500px] font-ibm font-light leading-relaxed px-4">
+            {t('cta.desc')}
           </p>
 
-          {/* Interactive Creative Form */}
-          <div className="w-full max-w-[400px] relative group px-4">
+          <div className="w-full max-w-[450px] relative group px-4">
             <AnimatePresence mode="wait">
               {status !== 'success' ? (
                 <motion.form 
                   key="form"
                   onSubmit={handleSubmit}
-                  className="relative flex items-center p-1 bg-white/10 backdrop-blur-2xl rounded-xl border border-white/20 focus-within:border-white/40 transition-all duration-500"
+                  className="relative flex items-center p-1.5 bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 focus-within:border-white/40 transition-all duration-500 w-full"
                   exit={{ opacity: 0, y: -10, scale: 0.98 }}
                 >
                   <input 
                     type="email"
                     required
-                    placeholder="بريدك الإلكتروني"
+                    placeholder={t('cta.placeholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 bg-transparent border-none text-white px-4 py-3 font-ibm placeholder:text-white/30 focus:ring-0 text-right dir-rtl text-sm"
+                    className={cn("flex-1 bg-transparent border-none text-white px-4 py-3 font-ibm placeholder:text-white/30 focus:ring-0 text-sm min-w-0 h-full", isRtl ? "text-right" : "text-left")}
                   />
                   
                   <motion.button 
                     disabled={status === 'loading'}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="bg-white text-red px-5 py-2.5 rounded-lg font-bold font-ibm hover:shadow-[0_10px_20px_rgba(255,255,255,0.1)] transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap text-xs"
+                    className={cn(
+                      "bg-white text-red px-6 py-3.5 rounded-xl font-bold hover:shadow-[0_10px_20px_rgba(255,255,255,0.1)] transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap text-sm shrink-0 uppercase tracking-wider",
+                      isRtl ? "font-ibm" : "font-syne"
+                    )}
                   >
                     {status === 'loading' ? (
                       <div className="w-3.5 h-3.5 border-2 border-red/30 border-t-red rounded-full animate-spin" />
                     ) : (
-                      'أرسل الآن'
+                      t('cta.button')
                     )}
                   </motion.button>
                 </motion.form>
@@ -129,7 +135,7 @@ export const CTA = () => {
                   className="bg-white text-red p-3 rounded-xl font-bold flex items-center justify-center gap-3 shadow-xl text-sm"
                 >
                   <div className="w-5 h-5 rounded-full bg-red text-white flex items-center justify-center text-[10px]">✓</div>
-                  <span className="font-ibm">تم استلام طلبك، سنتواصل معك!</span>
+                  <span className="font-ibm">{t('cta.success')}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -148,7 +154,9 @@ export const CTA = () => {
                 </div>
               ))}
             </div>
-            <span className="text-white/40 text-[9px] font-bold tracking-[0.2em] uppercase font-syne">Join 10+ Visionaries</span>
+            <span className={cn("text-white/40 text-[9px] font-bold tracking-[0.2em] uppercase", isRtl ? "font-ibm" : "font-syne")}>
+              {t('cta.social')}
+            </span>
           </motion.div>
         </div>
       </motion.div>

@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import { cn } from '../utils';
+import Magnetic from './Magnetic';
 
 export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t, isRtl } = useLanguage();
 
   const { scrollYProgress } = useScroll();
 
@@ -36,10 +39,10 @@ export const Nav = () => {
   };
 
   const navLinks = [
-    { id: 'why', label: 'لماذا Beyno' },
-    { id: 'stores', label: 'أنواع المحلات' },
-    { id: 'analytics', label: 'تحليل البيانات' },
-    { id: 'process', label: 'كيف نعمل' },
+    { id: 'why', label: t('nav.why') },
+    { id: 'stores', label: t('nav.stores') },
+    { id: 'analytics', label: t('nav.analytics') },
+    { id: 'process', label: t('nav.process') },
   ];
 
   return (
@@ -60,17 +63,19 @@ export const Nav = () => {
           >
             {/* Scroll Progress Bar */}
             <motion.div 
-              className="absolute bottom-0 right-0 h-[2px] bg-red origin-right z-[101]"
+              className={cn("absolute bottom-0 h-[2px] bg-red z-[101]", isRtl ? "right-0 origin-right" : "left-0 origin-left")}
               style={{ scaleX: scrollYProgress }}
             />
 
-            <button
-              dir="ltr"
-              onClick={() => scrollTo('top')}
-              className="font-syne font-extrabold text-[28px] text-cream tracking-[-0.05em] flex items-center group"
-            >
-              Bey<span className="text-red">.</span>no
-            </button>
+            <Magnetic strength={0.2}>
+              <button
+                dir="ltr"
+                onClick={() => scrollTo('top')}
+                className="font-syne font-extrabold text-[28px] text-cream tracking-[-0.05em] flex items-center group relative z-10"
+              >
+                Tek<span className="text-red ml-1 mr-0.5 text-[16px] translate-y-1">◣</span>ton
+              </button>
+            </Magnetic>
 
             {/* Desktop Nav Links */}
             <div className="hidden md:flex items-center gap-10">
@@ -81,7 +86,7 @@ export const Nav = () => {
                   className="text-[13px] font-bold text-cream/40 hover:text-cream tracking-wider transition-all duration-300 font-ibm relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 right-0 w-0 h-px bg-red transition-all duration-300 group-hover:w-full" />
+                  <span className={cn("absolute -bottom-1 w-0 h-px bg-red transition-all duration-300 group-hover:w-full", isRtl ? "right-0" : "left-0")} />
                 </button>
               ))}
             </div>
@@ -89,21 +94,35 @@ export const Nav = () => {
             {/* Left side Actions */}
             <div className="flex items-center gap-4">
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="hidden sm:flex items-center gap-2 text-cream/60 hover:text-cream px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 transition-all font-syne text-[11px] font-bold tracking-widest uppercase"
+                whileHover={{ scale: 1.1, rotate: 10 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:border-red transition-all group"
+                title={language === 'ar' ? 'Switch to English' : 'التحويل للعربية'}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-red/40" />
-                English
+                <svg 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="w-5 h-5 text-cream/70 group-hover:text-red transition-colors"
+                >
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
               </motion.button>
 
               <motion.button
                 onClick={() => scrollTo('cta')}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="hidden sm:block bg-red text-white border-none py-[10px] px-[20px] rounded-xl text-[13px] font-bold font-ibm shadow-lg shadow-red/20 active:shadow-none transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "hidden sm:block bg-red text-white border-none py-[10px] px-[20px] rounded-xl text-[13px] font-bold shadow-lg shadow-red/20 active:shadow-none transition-all uppercase tracking-wider",
+                  isRtl ? "font-ibm" : "font-syne"
+                )}
               >
-                ابدأ مشروعك
+                {t('nav.cta')}
               </motion.button>
 
               {/* Burger Button */}
@@ -124,9 +143,9 @@ export const Nav = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
+            initial={{ opacity: 0, x: isRtl ? '100%' : '-100%' }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
+            exit={{ opacity: 0, x: isRtl ? '100%' : '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-[99] bg-ink flex flex-col items-center justify-center pt-20"
           >
@@ -135,16 +154,29 @@ export const Nav = () => {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-3xl font-bold text-cream/60 hover:text-red transition-colors font-ibm"
+                  className={cn("text-3xl font-bold transition-colors hover:text-red", language === 'en' ? "font-syne" : "font-ibm", "text-cream/60")}
                 >
                   {link.label}
                 </button>
               ))}
               <button
                 onClick={() => scrollTo('cta')}
-                className="mt-8 bg-red text-white py-4 px-12 rounded-2xl text-xl font-bold font-ibm"
+                className={cn(
+                  "mt-8 bg-red text-white py-4 px-12 rounded-2xl text-xl font-bold",
+                  isRtl ? "font-ibm" : "font-syne"
+                )}
               >
-                ابدأ مشروعك الآن
+                {t('nav.cta')}
+              </button>
+              <button
+                onClick={() => {
+                  setLanguage(language === 'ar' ? 'en' : 'ar');
+                  setMobileMenuOpen(false);
+                }}
+                className="mt-4 flex items-center gap-2 text-cream/40 font-syne text-[11px] font-bold tracking-[0.3em] uppercase group"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                {language === 'ar' ? 'English' : 'عربي'}
               </button>
             </div>
           </motion.div>

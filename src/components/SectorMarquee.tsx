@@ -1,23 +1,22 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { cn } from '../utils';
 
 export const SectorMarquee = () => {
-  const sectors = [
-    'كافيه وقهوة مختصة', 'مطاعم وفود ترك', 'سوبرماركت وبقالة', 'صالون وسبا', 
-    'بوتيك وأزياء', 'إلكترونيات', 'صيدلية', 'محل حلاقة', 'صالات رياضية', 
-    'مخابز وحلويات', 'مغاسل ملابس', 'مكتبات'
-  ];
+  const { t, isRtl } = useLanguage();
+  const sectors = t('sectors') || [];
 
   return (
     <div className="bg-ink py-6 border-y border-white/5 overflow-hidden relative">
       {/* Gradients to fade edges */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-ink to-transparent z-10" />
+      <div className={cn("absolute inset-y-0 left-0 w-32 z-10", isRtl ? "bg-gradient-to-r from-ink to-transparent" : "bg-gradient-to-r from-ink to-transparent")} />
+      <div className={cn("absolute inset-y-0 right-0 w-32 z-10", isRtl ? "bg-gradient-to-l from-ink to-transparent" : "bg-gradient-to-l from-ink to-transparent")} />
       
       <motion.div 
-        className="flex whitespace-nowrap gap-12"
-        animate={{ x: [0, -1000] }}
+        className={cn("flex whitespace-nowrap gap-12 w-max", isRtl ? "flex-row-reverse" : "flex-row")}
+        animate={{ x: isRtl ? ["-50%", "0%"] : ["0%", "-50%"] }}
         transition={{ 
-          duration: 30, 
+          duration: 40, 
           repeat: Infinity, 
           ease: "linear" 
         }}
