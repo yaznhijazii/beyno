@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Services = () => {
+  const { t, isRtl } = useLanguage();
   const services = [
     {
       num: '01',
@@ -57,36 +59,46 @@ export const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-[100px] px-[5%] md:px-[8%] bg-ink">
-      <motion.span 
-        className="text-[11px] tracking-[0.28em] uppercase text-red font-bold dir-ltr mb-4 block"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        Our Solutions
-      </motion.span>
-      
-      <motion.h2 
-        className="font-ibm font-bold text-[clamp(32px,5vw,56px)] tracking-[-0.04em] leading-[1.05] text-cream mb-4 dir-rtl h2-ar"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-      >
-        منظومة خدمات <em className="text-red not-italic font-syne dir-ltr inline-block">متكاملة</em>
-      </motion.h2>
-      
-      <motion.p 
-        className="text-base text-cream/35 font-light leading-[1.8] dir-rtl max-w-[520px] ibm-font"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-      >
-        خمس ركائز أساسية تضمن تحويل رؤيتك إلى واقع تجاري ملموس ومربح
-      </motion.p>
+    <section id="services" className="py-[100px] bg-ink">
+      <div className="max-w-[1280px] mx-auto px-[5%] md:px-[8%]">
+        <div className="section-header-grid">
+          <div className="flex-1">
+            <motion.div 
+              className="section-tag-wrapper"
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="section-tag-line" />
+              <span className="section-tag-text">{t('nav.services')}</span>
+            </motion.div>
+            
+            <motion.h2 
+              className="section-title text-cream"
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            >
+              {isRtl ? (
+                <>منظومة خدمات <em className="text-red not-italic font-syne dir-ltr inline-block">متكاملة</em></>
+              ) : (
+                <>Integrated <em className="text-red not-italic font-syne inline-block">Solutions</em></>
+              )}
+            </motion.h2>
+          </div>
+          
+          <motion.p 
+            className="section-desc text-cream/35"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            {isRtl ? 'خمس ركائز أساسية تضمن تحويل رؤيتك إلى واقع تجاري ملموس ومربح' : 'Five core pillars ensuring your vision transforms into a tangible and profitable commercial reality.'}
+          </motion.p>
+        </div>
       
       <motion.div 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-cream/5 border-[0.5px] border-cream/5 rounded-[20px] overflow-hidden mt-14"
@@ -127,7 +139,8 @@ export const Services = () => {
             </div>
           </motion.div>
         ))}
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };

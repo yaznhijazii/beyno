@@ -154,3 +154,28 @@ h1, h2, h3, .h2-ar {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Unified Section Headers */
+.section-header-grid {
+  @apply flex flex-col md:flex-row justify-between items-center gap-8 mb-16 md:mb-20;
+}
+
+.section-tag-wrapper {
+  @apply flex items-center gap-3 mb-4;
+}
+
+.section-tag-line {
+  @apply w-12 h-px bg-red;
+}
+
+.section-tag-text {
+  @apply text-[11px] tracking-[0.4em] uppercase text-red font-bold font-syne;
+}
+
+.section-title {
+  @apply font-ibm font-bold text-[clamp(32px,5vw,56px)] leading-[1.2] tracking-[-0.04em] text-start;
+}
+
+.section-desc {
+  @apply text-lg font-ibm font-light leading-relaxed max-w-[480px] text-start;
+}

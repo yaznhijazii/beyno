@@ -83,21 +83,21 @@ export const Analytics = () => {
       {/* Background Glow */}
       <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-red/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-[1200px] mx-auto">
-        <div className={cn("flex flex-col md:flex-row justify-between items-end mb-16 gap-8", isRtl ? "text-right" : "text-left")}>
-          <div className="w-full">
+      <div className="max-w-[1280px] mx-auto px-[5%] md:px-[8%]">
+        <div className="section-header-grid">
+          <div className="flex-1">
             <motion.div 
-              className="flex items-center gap-3 mb-6"
-              initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="section-tag-wrapper"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <div className="w-10 h-px bg-red" />
-              <span className="text-[11px] tracking-[0.4em] uppercase text-red font-bold font-syne">{t('analytics.tag')}</span>
+              <div className="section-tag-line" />
+              <span className="section-tag-text">{t('analytics.tag')}</span>
             </motion.div>
             
             <motion.h2 
-              className="font-ibm font-bold text-[clamp(32px,5vw,56px)] tracking-[-0.04em] leading-[1.05] text-cream mb-4"
+              className="section-title text-cream mb-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -122,11 +122,11 @@ export const Analytics = () => {
           </div>
           
           <motion.p 
-            className="text-lg text-cream/35 font-light leading-[1.8] max-w-[480px] ibm-font"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            className="section-desc text-cream/40"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             {t('analytics.desc')}
           </motion.p>
@@ -168,7 +168,8 @@ export const Analytics = () => {
               <motion.div 
                 key={i} 
                 variants={itemVariants}
-                className={cn("py-10 px-8 border-cream/5 last:border-0 group hover:bg-white/[0.02] transition-colors", isRtl ? "text-right border-l" : "text-left border-r")}
+                data-cursor="view"
+                className={cn("py-10 px-8 border-cream/5 last:border-0 group hover:bg-white/[0.02] transition-colors cursor-pointer", isRtl ? "text-right border-l" : "text-left border-r")}
               >
                 <div className="text-[11px] text-cream/30 font-bold uppercase tracking-wider mb-3 font-ibm">{kpi.label}</div>
                 <div className="flex items-baseline gap-1 mb-3">
@@ -284,7 +285,7 @@ export const Analytics = () => {
                   { title: isRtl ? 'لاتيه بالفانيلا' : 'Vanilla Latte', p: '75%', val: '520' },
                   { title: isRtl ? 'قهوة مختصة' : 'Specialty Coffee', p: '62%', val: '410' }
                 ].map((item, i) => (
-                  <div key={i} className="group">
+                  <div key={i} className="group cursor-pointer" data-cursor="plus">
                     <div className={cn("flex justify-between items-center mb-2", isRtl ? "flex-row" : "flex-row")}>
                       <span className="text-xs text-cream/80 font-bold font-ibm">{item.title}</span>
                       <span className={cn("text-[10px] text-cream/30 font-black", isRtl ? "font-ibm" : "font-syne")}>{item.val}</span>

@@ -1,18 +1,21 @@
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { SectorMarquee } from './components/SectorMarquee';
-import { Why } from './components/Why';
 import { Stores } from './components/Stores';
-import { Analytics } from './components/Analytics';
 import { Process } from './components/Process';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { RouterProvider, useRoute } from './context/RouterContext';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { ProductsPage } from './pages/ProductsPage';
 import { cn } from './utils';
 
 const MainContent = () => {
   const { isRtl, language } = useLanguage();
+  const { route } = useRoute();
+
   return (
     <div 
       dir={isRtl ? "rtl" : "ltr"} 
@@ -23,17 +26,31 @@ const MainContent = () => {
       )}
     >
       <CustomCursor />
-      <Nav />
-      <main>
-        <Hero />
-        <SectorMarquee />
-        <Why />
-        <Stores />
-        <Analytics />
-        <Process />
-        <CTA />
-      </main>
-      <Footer />
+      {route === 'projects' && (
+        <>
+          <ProjectsPage />
+          <Footer />
+        </>
+      )}
+      {route === 'products' && (
+        <>
+          <ProductsPage />
+          <Footer />
+        </>
+      )}
+      {route === 'home' && (
+        <>
+          <Nav />
+          <main>
+            <Hero />
+            <SectorMarquee />
+            <Stores />
+            <Process />
+            <CTA />
+          </main>
+          <Footer />
+        </>
+      )}
     </div>
   );
 };
@@ -41,7 +58,9 @@ const MainContent = () => {
 function App() {
   return (
     <LanguageProvider>
-      <MainContent />
+      <RouterProvider>
+        <MainContent />
+      </RouterProvider>
     </LanguageProvider>
   );
 }

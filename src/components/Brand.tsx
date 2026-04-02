@@ -1,37 +1,49 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Brand = () => {
+  const { isRtl } = useLanguage();
   return (
-    <section id="brand" className="py-[100px] px-[5%] md:px-[8%] bg-ink">
-      <motion.span 
-        className="text-[11px] tracking-[0.28em] uppercase text-red font-bold dir-ltr mb-4 block"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        Brand Identity
-      </motion.span>
-      
-      <motion.h2 
-        className="font-ibm font-bold text-[clamp(32px,5vw,56px)] tracking-[-0.04em] leading-[1.05] text-cream mb-4 dir-rtl h2-ar"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-      >
-        الهوية <em className="text-red not-italic font-syne dir-ltr inline-block">البصرية</em>
-      </motion.h2>
-      
-      <motion.p 
-        className="text-base text-cream/35 font-light leading-[1.8] dir-rtl max-w-[520px] ibm-font"
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-      >
-        بناء صورة ذهنية راسخة تعكس احترافية مشروعك وترك بصمة مميزة في السوق السعودي
-      </motion.p>
+    <section id="brand" className="py-[100px] bg-ink">
+      <div className="max-w-[1280px] mx-auto px-[5%] md:px-[8%]">
+        <div className="section-header-grid">
+        <div className="flex-1">
+          <motion.div 
+            className="section-tag-wrapper"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="section-tag-line" />
+            <span className="section-tag-text">{isRtl ? 'الهوية البصرية' : 'Brand Identity'}</span>
+          </motion.div>
+          
+          <motion.h2 
+            className="section-title text-cream mb-4"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          >
+            {isRtl ? (
+              <>الهوية <em className="text-red not-italic font-syne dir-ltr inline-block">البصرية</em></>
+            ) : (
+              <>Visual <em className="text-red not-italic font-syne inline-block">Identity</em></>
+            )}
+          </motion.h2>
+        </div>
+        
+        <motion.p 
+          className="section-desc text-cream/35"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
+          {isRtl ? 'بناء صورة ذهنية راسخة تعكس احترافية مشروعك وترك بصمة مميزة في السوق السعودي' : 'Building a solid mental image that reflects your project professionalism and leaves a unique mark in the Saudi market.'}
+        </motion.p>
+      </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-14 items-start">
         {/* Left Side (Logo Showcase) */}
@@ -121,7 +133,7 @@ export const Brand = () => {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           >
-            <div className="font-ibm font-bold text-[clamp(32px,5vw,52px)] tracking-[-0.03em] text-cream leading-[1.1] dir-rtl mb-3 h2-ar">
+            <div className="font-ibm font-bold text-[clamp(32px,5vw,52px)] tracking-[-0.03em] text-cream leading-[1.5] dir-rtl mb-3 h2-ar">
               منصة واحدة<br/>تكفي لإطلاق<br/><em className="text-red not-italic font-syne dir-ltr inline-block">أي محل.</em>
             </div>
             <div className="text-sm text-cream/30 font-light leading-[1.8] dir-rtl mb-5 ibm-font">
@@ -140,7 +152,7 @@ export const Brand = () => {
           </motion.div>
         </div>
       </div>
-
+      </div>
     </section>
   );
 };

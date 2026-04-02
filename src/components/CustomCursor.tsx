@@ -1,7 +1,10 @@
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const CustomCursor = () => {
+  const { isRtl } = useLanguage();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
@@ -108,14 +111,17 @@ export const CustomCursor = () => {
             >
               <AnimatePresence mode="wait">
                 {cursorType === 'view' && (
-                  <motion.span 
+                  <motion.div 
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0 }}
-                    className="text-[8px] font-syne font-bold text-red uppercase tracking-wider"
+                    className="flex flex-col items-center justify-center"
                   >
-                    View
-                  </motion.span>
+                    <ArrowUpRight size={14} className="text-red mb-0.5" />
+                    <span className="text-[7px] font-syne font-black text-red uppercase tracking-wider">
+                      {isRtl ? 'عرض' : 'View'}
+                    </span>
+                  </motion.div>
                 )}
                 {cursorType === 'plus' && (
                   <motion.span 

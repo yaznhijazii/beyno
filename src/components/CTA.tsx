@@ -74,7 +74,7 @@ export const CTA = () => {
           </motion.div>
 
           <motion.h2 
-            className="text-[clamp(32px,5vw,60px)] font-bold text-white leading-[1] mb-6 font-ibm tracking-tight"
+            className="text-[clamp(32px,5vw,60px)] font-bold text-white leading-[1.5] mb-6 font-ibm tracking-tight"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, type: "spring" }}

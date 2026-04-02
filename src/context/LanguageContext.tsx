@@ -17,6 +17,8 @@ const translations: Record<Language, any> = {
       stores: 'أنواع المحلات',
       analytics: 'تحليل البيانات',
       process: 'كيف نعمل',
+      projects: 'مشاريعنا',
+      products: 'منتجاتنا',
       cta: 'ابدأ مشروعك'
     },
     hero: {
@@ -25,10 +27,10 @@ const translations: Record<Language, any> = {
       ctaSecondary: 'شاهد كيف نعمل',
       stats: {
         projects: 'مشروع تجاري',
-        launchTime: 'متوسط وقت الإطلاق',
+        launchTime: 'أسرع بشريك متكامل',
         services: 'في منصة واحدة',
-        satisfaction: 'رضا العملاء',
-        days: '14 يوم',
+        satisfaction: 'توفير في التكاليف',
+        days: '100%',
         srvCount: '5 خدمات'
       }
     },
@@ -127,6 +129,8 @@ const translations: Record<Language, any> = {
       stores: 'Sectors',
       analytics: 'Analytics',
       process: 'Process',
+      projects: 'Projects',
+      products: 'Products',
       cta: 'Launch Now'
     },
     hero: {
@@ -135,10 +139,10 @@ const translations: Record<Language, any> = {
       ctaSecondary: 'How we operate',
       stats: {
         projects: 'Commercial Projects',
-        launchTime: 'Avg. Launch Time',
+        launchTime: 'Full-Service Speed',
         services: 'In one platform',
-        satisfaction: 'Client Satisfaction',
-        days: '14 Days',
+        satisfaction: 'Cost Savings',
+        days: '100%',
         srvCount: '5 Services'
       }
     },

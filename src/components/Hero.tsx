@@ -33,7 +33,7 @@ export const Hero = () => {
     { num: '10+', label: t('hero.stats.projects') },
     { num: t('hero.stats.days'), label: t('hero.stats.launchTime') },
     { num: t('hero.stats.srvCount'), label: t('hero.stats.services') },
-    { num: '98%', label: t('hero.stats.satisfaction') },
+    { num: '70%', label: t('hero.stats.satisfaction') },
   ];
 
   return (

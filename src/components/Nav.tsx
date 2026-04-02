@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { cn } from '../utils';
 import Magnetic from './Magnetic';
+import { useRoute } from '../context/RouterContext';
 
 export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -10,6 +11,7 @@ export const Nav = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t, isRtl } = useLanguage();
+  const { navigate, route } = useRoute();
 
   const { scrollYProgress } = useScroll();
 
@@ -31,18 +33,22 @@ export const Nav = () => {
   }, [lastScrollY, mobileMenuOpen]);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
+    if (route !== 'home') {
+      navigate('home');
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   const navLinks = [
-    { id: 'why', label: t('nav.why') },
-    { id: 'stores', label: t('nav.stores') },
-    { id: 'analytics', label: t('nav.analytics') },
-    { id: 'process', label: t('nav.process') },
+    { id: 'stores', label: t('nav.stores'), type: 'scroll' },
+    { id: 'process', label: t('nav.process'), type: 'scroll' },
+    { id: 'projects', label: t('nav.projects'), type: 'page' },
+    { id: 'products', label: t('nav.products'), type: 'page' },
   ];
 
   return (
@@ -82,11 +88,16 @@ export const Nav = () => {
               {navLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => scrollTo(link.id)}
-                  className="text-[13px] font-bold text-cream/40 hover:text-cream tracking-wider transition-all duration-300 font-ibm relative group"
+                  onClick={() => link.type === 'page' ? navigate(link.id as 'projects' | 'products') : scrollTo(link.id)}
+                  className={cn(
+                    "text-[13px] font-bold tracking-wider transition-all duration-300 font-ibm relative group",
+                    link.type === 'page'
+                      ? 'text-cream/60 hover:text-red'
+                      : 'text-cream/40 hover:text-cream'
+                  )}
                 >
                   {link.label}
-                  <span className={cn("absolute -bottom-1 w-0 h-px bg-red transition-all duration-300 group-hover:w-full", isRtl ? "right-0" : "left-0")} />
+                  <span className={cn("absolute -bottom-1 w-0 h-px transition-all duration-300 group-hover:w-full", link.type === 'page' ? 'bg-red' : 'bg-red', isRtl ? "right-0" : "left-0")} />
                 </button>
               ))}
             </div>
@@ -153,8 +164,19 @@ export const Nav = () => {
               {navLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => scrollTo(link.id)}
-                  className={cn("text-3xl font-bold transition-colors hover:text-red", language === 'en' ? "font-syne" : "font-ibm", "text-cream/60")}
+                  onClick={() => {
+                    if (link.type === 'page') {
+                      navigate(link.id as 'projects' | 'products');
+                      setMobileMenuOpen(false);
+                    } else {
+                      scrollTo(link.id);
+                    }
+                  }}
+                  className={cn(
+                    "text-3xl font-bold transition-colors",
+                    language === 'en' ? "font-syne" : "font-ibm",
+                    link.type === 'page' ? 'text-red/70 hover:text-red' : 'text-cream/60 hover:text-red'
+                  )}
                 >
                   {link.label}
                 </button>

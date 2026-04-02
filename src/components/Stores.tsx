@@ -22,22 +22,22 @@ export const Stores = () => {
   const tickerItems = [...stores, ...stores, ...stores];
 
   return (
-    <section id="stores" className="pt-[200px] pb-[140px] bg-white overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-[5%] md:px-[8%] mb-16">
-        <div className={cn("flex flex-col md:flex-row justify-between items-start gap-12", isRtl ? "text-right" : "text-left")}>
-          <div className="w-full">
+    <section id="stores" className="py-[120px] bg-white overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-[5%] md:px-[8%] mb-16">
+        <div className="section-header-grid">
+          <div className="flex-1">
             <motion.div 
-              className={cn("flex items-center gap-3 mb-6", "justify-start")}
-              initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="section-tag-wrapper"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <div className="w-12 h-px bg-red" />
-              <span className="text-[11px] tracking-[0.4em] uppercase text-red font-bold font-syne">{t('stores.tag')}</span>
+              <div className="section-tag-line" />
+              <span className="section-tag-text">{t('stores.tag')}</span>
             </motion.div>
             
             <motion.h2 
-              className="font-ibm font-bold text-[clamp(40px,6vw,72px)] leading-[1.1] text-ink h2-ar"
+              className="section-title text-ink"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -52,7 +52,7 @@ export const Stores = () => {
           </div>
           
           <motion.p 
-            className="text-xl text-ink-3 max-w-[500px] ibm-font leading-relaxed font-light"
+            className="section-desc text-ink-3"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
